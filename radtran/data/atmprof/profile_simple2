@@ -1,0 +1,8 @@
+# AFGL atmospheric constituent profile. U.S. standard atmosphere 1976. ( AFGL-TR-86-0110)       
+# molecules:    H2O
+#    p(mb)        T(K)    h2o(cm-3)
+1.0	2.0	  2.0
+2.0	4.0	  2.0
+3.0	10.0	  2.0
+4.0	10.0	  2.0
+5.0	9.0	  2.0
