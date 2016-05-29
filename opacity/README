@@ -1,0 +1,54 @@
+------------------------------------------------
+ Description
+------------------------------------------------
+
+This directory contains the programs to calculate the opacity of a given
+molecule, as a function of wavelength, pressure and temperature.
+Opacity calculaiton is based on HITRAN2012 spectral data, which you need
+to obtain by yourself. 
+
+The data matrix is saved as a netCDF file.
+
+
+------------------------------------------------
+ Note
+------------------------------------------------
+
+- The line broadening profile is assumed to be Voigt profile. 
+
+- (05.29.2016) Calculating 10000 wavenumber grids takes about 185 sec with 2.6
+  GHz CPU clock rate. The computation time grows linearly with the number of 
+  the grid for pressure and temperature. Thus, for example, making a table
+  with 10000 wavenumber grids as well as 31 grids both for pressure and temperature 
+  will take ~2 days. 
+
+- The data type of the cross section is 'float32'. Thus, for example, the size
+  of the cross section table with 10000 wavenumber grids as well as 31 grids
+  both for pressure and temperature are ~38 MB. 
+
+
+------------------------------------------------
+ Instruction
+------------------------------------------------
+
+(1) Create a data directory under this file.
+    For example: 
+    	mkdir hitran2012
+
+
+(2) Obtain HITRAN datasets and save them into the directory. 
+
+    https://www.cfa.harvard.edu/hitran/
+
+
+(3) Modify the parameters in setup_mkxstbl.py
+
+
+(4) Execute!
+
+	python main_mkxstbl.py
+
+
+
+
+
