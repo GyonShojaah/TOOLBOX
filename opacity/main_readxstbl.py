@@ -7,7 +7,6 @@ import netCDF4
 import numpy as np
 import datetime
 import util_interp
-import errors
 import sys
 #import lowres
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from setup_mkxstbl import *
+from setup_makexstbl import *
 import io_txt
 import io_nc
 from extract_lines import extract_hitran
@@ -60,8 +60,11 @@ def calc_xs ( molecule, linedata, WN_lattice, T_lattice, P_lattice  ) :
                     wn_llim = WN_lattice[count_WN] - WN_CUTOFF
                     wn_ulim = WN_lattice[count_WN] + WN_CUTOFF
                     i_llim  = np.where(  wn_llim < linedata['position'] )[0][0]
-                    i_ulim  = np.where(  wn_ulim < linedata['position'] )[0][0]
-                    intensity_array = strength_array[i_llim:i_ulim]*voigtfunc_array[i_llim:i_ulim](WN_lattice[count_WN])
+                    i_ulim  = np.where(  linedata['position'] < wn_ulim )[0][-1]
+                    if i_ulim == len( linedata['position'] ) - 1 :
+                        intensity_array = strength_array[i_llim:]*voigtfunc_array(WN_lattice[count_WN])[i_llim:]
+                    else :
+                        intensity_array = strength_array[i_llim:i_ulim]*voigtfunc_array(WN_lattice[count_WN])[i_llim:i_ulim]
                     xs[count_WN][count_T][count_P] = np.sum(intensity_array)
 
                 else :
