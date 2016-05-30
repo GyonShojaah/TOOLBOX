@@ -2,11 +2,13 @@
 # Module
 #=============================================================================
 
-from setting_readxs import *
+#from setting_readxstbl import *
+import netCDF4
 import numpy as np
 import datetime
 import util_interp
 import errors
+import sys
 #import lowres
 
 #=============================================================================
@@ -14,48 +16,19 @@ import errors
 #=============================================================================
 
 #=============================================================================
-def read_lookuptable(xsfile, wn_min, wn_max):
+def read_lookuptable ( infile ):
+
     """
     Extract Look-up Table
     """
-    data = np.load(xsfile)
 
-    PP_grid  = data['P']*1.0e3 # mbar => barye (x 1000)
-    TT_grid     = data['T']
-    WN_grid_org = data['WN']
-    XS_grid_org = data['XS']
+    ncfile_r = netCDF4.Dataset( infile, 'r', format='NETCDF3_64BIT')
+    wn_r     = ncfile_r.variables['wn']
+    pres_r   = ncfile_r.variables['pres']
+    temp_r   = ncfile_r.variables['temp']
+    xs_r     = ncfile_r.variables['xs']
 
-    #------------------------------------------------
-    # check wavenumber range
-    #------------------------------------------------
-    if ( (wn_min < min(WN_grid_org)) or (wn_max > max(WN_grid_org)) ) : 
-        errors.exit_msg("Wavenumbers set are out of range of look-up tables.")
-    #------------------------------------------------
-
-    indx_min = nearestindex_WN(WN_grid_org, wn_min)
-    indx_max = nearestindex_WN(WN_grid_org, wn_max)
-
-    WN_grid = WN_grid_org[indx_min:indx_max+1]
-    XS_grid = XS_grid_org[indx_min:indx_max+1]
-
-    #### TEST (to be eventually removed)
-    id1, id2, id3 = np.where(XS_grid <= 0)
-    for i1, i2, i3 in zip(id1, id2, id3) :
-        XS_grid[i1][i2][i3] = 1.e-48
-    #### TEST
-
-    return WN_grid, TT_grid, PP_grid, XS_grid
-
-
-
-#=============================================================================
-def nearestindex_WN(WN_lattice, wn) :
-    """
-    Returns the wavenumber index nearest to the given wavelength
-    """
-    idx = np.abs(WN_lattice-wn).argmin()
-    return idx
-
+    return wn_r, pres_r, temp_r, xs_r
 
 
 #=============================================================================
@@ -64,68 +37,33 @@ def nearestindex_WN(WN_lattice, wn) :
 
 if __name__ == "__main__":
 
-    now = datetime.datetime.now()
-    print now.strftime("%Y-%m-%d %H:%M:%S")
+    filename = sys.argv[1]
+    WN_grid, P_grid, T_grid, XS_grid = read_lookuptable ( filename )
 
-    #------------------------------------------------
-    # set up look-up tables
-    #------------------------------------------------
-    wn_min, wn_max, wn_num = 100.0, 33333.0, 10000
-    if (USER_WN_ON):
-        wn_min, wn_max, wn_num = WN_MIN, WN_MAX, WN_NUM
-    else:
-        tmp = np.load(XSFILE)
-        wn_min_tmp, wn_max_tmp, wn_num_tmp = tmp['WN'][0], tmp['WN'][-1], len(tmp['WN'])
-        if (wn_min_tmp > wn_min): wn_min = wn_min_tmp
-        if (wn_max_tmp < wn_max): wn_max = wn_max_tmp
-        if (wn_num_tmp < wn_num): wn_num = wn_num_tmp
-        WN_lookuptable, TT_lookuptable, PP_lookuptable, XS_lookuptable = read_lookuptable(XSFILE, wn_min, wn_max)
+    print '--------------------------------------------------'
 
-    if (CNTNM_ON):
-        WN_lookuptable, TT_lookuptable, PP_lookuptable, XS_CNTNM_lookuptable = read_lookuptable(XSFILE_CNTNM, wn_min, wn_max)
-    #------------------------------------------------
+    print ' select pressure [mbar] : '
+    for ii in xrange( len( P_grid ) ) :
+        print '({0:d}) {1:e}'.format( ii, P_grid[ii] ), 
+    print ''
+    s_pres = raw_input()
+    i_pres = int( s_pres )
 
-    #------------------------------------------------
-    # set up the outspectrum grid
-    #------------------------------------------------
-    WN_outspectrum = np.linspace(wn_min, wn_max, wn_num)
-    #------------------------------------------------
+    print '--------------------------------------------------'
 
-    #------------------------------------------------
-    # compute radiation at each wavenumber grid
-    #------------------------------------------------
-    for wni in range(wn_num):
+    print ' select temperature [mbar] : '
+    for ii in xrange( len( T_grid ) ) :
+        print '({0:d}) {1:3f}'.format( ii, T_grid[ii] ), 
+    print ''
+    s_temp = raw_input()
+    i_temp = int( s_temp )
 
-        #--------------------------------------------
-        # compute radiation
-        wn = WN_outspectrum[wni]
-        wni_near = nearestindex_WN(WN_lookuptable, wn)
-        func_XSofTP = util_interp.interp_rect_spline(TT_lookuptable, PP_lookuptable, XS_lookuptable[wni_near])
-        if (CNTNM_ON):
-            func_XS_CNTNMofTP = util_interp.interp_rect_spline(TT_lookuptable, PP_lookuptable, XS_CNTNM_lookuptable[wni_near])
+    print '--------------------------------------------------'
 
-        #--------------------------------------------
-        if (CNTNM_ON):
-            result = func_XSofTP(TEMP, PRES*1e3) + func_XS_CNTNMofTP(TEMP, PRES*1e3)
-        else:
-            result = func_XSofTP(TEMP, PRES*1e3)
-        # store the result
-        if wni == 0 :
-            outspectrum = np.array([result])
-        else :
-            outspectrum = np.r_[outspectrum, result]
-        #--------------------------------------------
+    with open( filename+'.tmp' , 'w') as f:
 
-    #------------------------------------------------
+        for i_wn in xrange( len( WN_grid ) ):
+            f.write( str(WN_grid[ i_wn ])+'\t'+str(XS_grid[ i_wn, i_pres, i_temp ])+'\n' )
 
-    #------------------------------------------------
-    # save rawdata
-    #------------------------------------------------
-    #np.savez(OUTFILE_TAG+".npz", WN=WN_outspectrum, SP=outspectrum)
-    data = np.dstack([WN_outspectrum, outspectrum])
-    np.savetxt(OUTFILE_TAG+".txt", data[0])
-    #------------------------------------------------
 
-    now = datetime.datetime.now()
-    print now.strftime("%Y-%m-%d %H:%M:%S")
 

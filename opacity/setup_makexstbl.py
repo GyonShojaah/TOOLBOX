@@ -4,18 +4,19 @@
 MOLECULE='H2O'
 ISOTOPE=1
 
-DATAFILE_DIR  = 'HITRAN2012/'
+DATAFILE_DIR  = '/Users/yuka/data/HITRAN2012/'
 DATAFILE='01_hit12.par'
 
 OUTFILE_DIR = 'xstbl/'
 OUTFILE_TAG  = 'xstbl_HITRAN2012_00010-2000_m10000_H2O'
+#OUTFILE_TAG  = 'tmp'
 
 #------------------------------------------------
 # wavelength range [cm^-1]
 #------------------------------------------------
 WN_MIN    = 10.0    # cm^-1
-WN_MAX    = 2000.0 # cm^-1
-WN_NUM    = 10000
+WN_MAX    = 10000.0 # cm^-1
+WN_NUM    = 1000
 #WN_CUTOFF = 
 
 #------------------------------------------------
