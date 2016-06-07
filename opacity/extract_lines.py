@@ -17,7 +17,7 @@ def extract_hitran ( dataFile, wn_limit, molecule, isoNr, strMin=0.0 ):
     try:
         hitran = open ( dataFile )
     except IOError:
-        raise SystemExit, 'opening Hitran data file "' + file + '" failed!'
+        raise SystemExit, 'opening Hitran data file "' + dataFile + '" failed!'
 
     xBegin, xHigh = wn_limit
 

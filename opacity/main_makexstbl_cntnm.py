@@ -1,27 +1,29 @@
-import numpy as np
-import sys
-import datetime
-import ConfigParser
 import MT_CKD
 import util_interp
+import io_txt
+import io_nc
+
+import sys
+import numpy as np
 
 from scipy import constants
 from scipy import special
 
 
-OUTFILE_TAG  = 'xstbl2_cntnm_00010-10000_m09991_H2O'
+OUTFILE_DIR = 'xstbl/'
+OUTFILE_TAG  = 'xstbl_cntnm_08000-10000_mm200001_H2O'
+                                                                                                                               
+WN_MIN    = 8000.0    # cm^-1                                                      
+WN_MAX    = 10000.0 # cm^-1
+WN_NUM    = 200001                                                                                                                                                               
 
-WN_MIN   = 10.0   # cm^-1
-WN_MAX   = 10000.0  # cm^-1
-WN_NUM   = 9991
-         
-P_MIN    = 1.0e-5  # mbar # might want to go to 1e-6
-P_MAX    = 1.0e+3  # mbar # doesn't need to go above 1e4
-P_NUM    = 9
-
-T_MIN    = 150  # K
-T_MAX    = 350  # K
-T_NUM    = 5    # K  per 25 K
+P_MIN     = 1.0e-20 # mbar # might want to go to 1e-6
+P_MAX     = 1.0e+5 # mbar # doesn't need to go above 1e4
+P_NUM     = 26
+                                                                                                                         
+T_MIN     = 150   # K
+T_MAX     = 500  # K
+T_NUM     = 8   # K
 
 CC = constants.c*1e2
 HH = constants.h*1e7
@@ -82,57 +84,36 @@ def calc_xs_cntnm(WN_lattice, T_lattice, P_lattice) :
     return xs
 
 
-##############################################################################
-def get_moldata(molecule, key):
-    """
-    =======================================================================
-
-    get_moldata(molecule, key) :
-
-    -------- USAGE --------------------------------------------------------
-    get 'key' parameter of the molecule
-
-    -------- INPUT --------------------------------------------------------
-    molecule  (str)    molecule name           
-    key       (str)    keyword ("ID, "mass", "beta", "freq", "dege")
-
-    -------- OUTPUT --------------------------------------------------------
-    valule    (float)  the value of the keyword
-
-    =======================================================================
-    """
-    moldata = ConfigParser.ConfigParser()
-    moldata.read('moldata.cfg')
-    tmp = moldata.get(molecule,key)
-
-    return map(float, tmp.split(","))
-
-
 
 
 ##############################################################################
 if __name__ == "__main__":
 
-    outfile = OUTFILE_TAG + '.npz'
-    logfile = OUTFILE_TAG + '.log'
 
-    now = datetime.datetime.now()
-    with open(logfile, 'w') as f :
-        f.write(now.strftime("%Y-%m-%d %H:%M:%S") + '\n')
+    # filename
+    outfile = OUTFILE_DIR + OUTFILE_TAG + '.nc'
+    logfile = OUTFILE_DIR + OUTFILE_TAG + '.log'
 
-    WN_lattice = np.linspace(         WN_MIN,          WN_MAX,  num=WN_NUM) # cm-
+    # make grid points
+    WN_lattice = np.linspace(         WN_MIN,          WN_MAX,  num=WN_NUM) # cm-1
     P_lattice  = np.logspace(np.log10(P_MIN), np.log10(P_MAX),  num=P_NUM)  # mbar
     T_lattice  = np.linspace(          T_MIN,           T_MAX,  num=T_NUM)  # K
 
+    # save information in log file
+    io_txt.save_line( logfile, 'FILE: ' + OUTFILE_TAG + '.nc', addition=False )
+    io_txt.save_line( logfile, '' )
+    io_txt.save_line( logfile, 'wavenumber [cm^-1] : '+str(WN_MIN)+'-'+str(WN_MAX)+', '+str(WN_NUM)+' grid points' )
+    io_txt.save_line( logfile, 'pressure [mbar]    : '+str( P_MIN)+'-'+str( P_MAX)+', '+str( P_NUM)+' grid points' )
+    io_txt.save_line( logfile, 'temperature [K]    : '+str( T_MIN)+'-'+str( T_MAX)+', '+str( T_NUM)+' grid points' )
+    io_txt.save_line( logfile, '' )
+    io_txt.save_time( logfile, 'start : ' )
+
     xs = calc_xs_cntnm(WN_lattice, T_lattice, P_lattice)
 
-    np.savez(outfile, WN=WN_lattice, P=P_lattice, T=T_lattice, XS=xs)
+    # save output
+    io_nc.save_xstbl( outfile, WN_lattice, P_lattice, T_lattice, xs )
+    #np.savez(outfile, WN=WN_lattice, P=P_lattice, T=T_lattice, XS=xs)
 
-    now = datetime.datetime.now() 
-    with open(logfile, 'a') as f :
-        f.write('WLNUM: ' + str(WN_NUM) + '\n')
-        f.write('PNUM : ' + str(P_NUM) + '\n')
-        f.write('TNUM : ' + str(T_NUM) + '\n')
-        f.write(now.strftime("%Y-%m-%d %H:%M:%S") + '\n')
-
+    # save information in log file
+    io_txt.save_time( logfile, 'end   : ' )
 

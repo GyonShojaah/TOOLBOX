@@ -1,5 +1,4 @@
 # AFGL atmospheric constituent profile. midlatitude summer. ( AFGL-TR-86-0110)
-#     
 # molecules: O2 H2O CO2 CH4
 120.000000	0.000020	380.000000	28.8	7.2556e+04	2.0015e-01	3.5027e+01	3.000E-02
 115.000000	0.000040	316.800000	28.8	9.4068e+04	2.4017e-01	4.0029e+01	6.000E-02

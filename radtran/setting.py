@@ -12,7 +12,7 @@ MOLABS_ON   = True
 CNTNM_ON   = False
 
 # Include Rayleigh scattering ?
-RAYLEIGH_ON = False
+RAYLEIGH_ON = True
 
 # Include cloud scattering ?
 CLD_ON      = False
@@ -34,8 +34,8 @@ DELTA       = 1.0
 # CHECK CONVERGENCE BY INCREASING THIS NUMBER !!
 # wavenumber grids
 # (used if USER_WN_ON = True)
-WN_MIN      = 1000
-WN_MAX      = 6000
+WN_MIN      = 2000
+WN_MAX      = 10000
 WN_NUM = 10000
 #WN_MIN = 1000
 #WN_MAX = 10000
@@ -58,8 +58,8 @@ RHOL    = 1.0 # g/cm
 # input/output files
 #------------------------------------------------
 
-#FILE_ATM    = "data/atmprof/prof_segura2005_Temp_H2O_CH4"
-FILE_ATM    = "data/atmprof/prof_segura2005_CH4"
+FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv_H2O1e-3"
+#FILE_ATM    = "data/atmprof/prof_segura2005_CH4"
 #FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv"
 #FILE_ATM    = "data/atmprof/prof_Gmin_T400K_H2O_CH4"
 #FILE_ATM    = "data/atmprof/prof_ANN2261-2264aijlE_g10_R10_P10_tl_P4days"
@@ -74,10 +74,10 @@ FILE_ATM    = "data/atmprof/prof_segura2005_CH4"
 #FILE_RFINDX = "data/cld//Warren.yml.txt" # ice water
 
 #XSFILE_TAG  = "../xstbl/xstbl_HITRAN2012_00010-10000_m09991_c25_"
-XSFILE_TAG  = "../xstbl/xstbl2_HITRAN2012_00010-10000_m09991_"
+XSFILE_TAG  = "/Users/yuka/TOOLBOX_20160429/xstbl/xstbl2_HITRAN2012_00010-10000_m09991_"
 #XSFILE_TAG  = "lkuptbl/xstbl_HITRAN2012_20000-30000_m10001_c25_"
 #XSFILE_TAG_CNTNM = "../xstbl/xstbl2_cntnm_00010-10000_m09991_"
-XSFILE_TAG_CNTNM = "../xstbl/xstbl_cntnm_00010-10000_m09991_"
+XSFILE_TAG_CNTNM = "/Users/yuka/TOOLBOX_20160429/xstbl/xstbl_cntnm_00010-10000_m09991_"
 #OUTFILE_TAG = "cntnm_00010-10000_m10001_H2O_TEMP300_PSURF1e3_MIX1e-6"
 #OUTFILE_TAG = "prof_Gmin_T400K_H2O_CH4_Rp3e9_01000-10000_m09991_trapz-1000_c25+cntnm"
 #OUTFILE_TAG = "prof_GCM_S0.5_01000-10000_m09991_trapz-1000"
@@ -85,7 +85,7 @@ XSFILE_TAG_CNTNM = "../xstbl/xstbl_cntnm_00010-10000_m09991_"
 #OUTFILE_TAG = "prof_ANN1950-1952aijlE_g10_R10_P10_P15days_cld_trapz-1000_line"
 #OUTFILE_TAG = "profile_HATP11b_T500K_00010-10000_m09991_quad-1000_line+cntnm"
 #OUTFILE_TAG = "Earth_midlatsummer"
-OUTFILE_TAG = "segura2005_CH4"
+OUTFILE_TAG = "midlatsummer_H2O1e-3"
 
 #------------------------------------------------
 # planetary parameters (float)

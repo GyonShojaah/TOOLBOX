@@ -17,7 +17,7 @@ OUTFILE_TAG  = 'xstbl_HITRAN2012_00010-2000_m10000_H2O'
 WN_MIN    = 10.0    # cm^-1
 WN_MAX    = 10000.0 # cm^-1
 WN_NUM    = 1000
-#WN_CUTOFF = 
+WN_CUTOFF = 25.
 
 #------------------------------------------------
 # pressure range [mbar]
@@ -30,8 +30,10 @@ P_NUM     = 4
 #------------------------------------------------
 # temperature range [K]
 #------------------------------------------------                  
-T_MIN     = 50   # K
-T_MAX     = 650  # K
+#T_MIN     = 50   # K
+T_MIN     = 150   # K
+T_MAX     = 550  # K
+T_NUM     = 8   # K
 #T_NUM     = 31   # K
-T_NUM     = 4
+#T_NUM     = 4
 
