@@ -1,8 +1,16 @@
 #=============================================================================
 # Module
 #=============================================================================
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
+
+import netCDF4
 import numpy  as np
 from   scipy  import interpolate
+
+
+
+import io_nc 
 import errors
 import cgs
 
@@ -18,12 +26,9 @@ def calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, xsfile_tag
     #------------------------------------------------
     # set up lookup tables
     #------------------------------------------------
-    xsfile = xsfile_tag + molname + ".npz"
+    xsfile = xsfile_tag + molname + ".nc"
     WN_lookuptable, TT_lookuptable, PP_lookuptable, XS_lookuptable = read_lookuptable(xsfile, (grid_wn[0], grid_wn[-1]))
 
-
-    print "layer_P", layer_P
-    print "PP_lookuptable[-1]", PP_lookuptable[-1]
     #------------------------------------------------
     # check range of lookup table
     #------------------------------------------------
@@ -74,14 +79,11 @@ def calc_nXSofZ_Rayleigh(layer_z, grid_wn, tuple_func_atmprof, polarization):
     layer_P = func_PofZ(layer_z)
     layer_T = func_TofZ(layer_z)
     layer_n0 = layer_P/(cgs.RR*layer_T)*cgs.NA
-#    print layer_n0
 
     grid_wl = 1.0/grid_wn
     grid_XS = 128.0*np.pi**5/(3.0*grid_wl**4)*polarization**2
 
     mesh_n0, mesh_XS = np.meshgrid(layer_n0, grid_XS)
-#    print "mesh_n0", mesh_n0
-#    print "mesh_XS", mesh_XS
     mesh_nXS = mesh_n0*mesh_XS
     return mesh_nXS # WN_NUM x Z_NUM
 
@@ -92,14 +94,10 @@ def read_lookuptable(xsfile, wn_limit):
     """
     Extract Look-up Table
     """
-    data = np.load(xsfile)
+    WN_grid_org, PP_grid_org, TT_grid, XS_grid_org = io_nc.read_xstbl( xsfile )
 
-    PP_grid     = data['P']*1.0e3 # mbar => barye (x 1000)
-
-#    print "PP_grid", PP_grid
-    TT_grid     = data['T']
-    WN_grid_org = data['WN']
-    XS_grid_org = data['XS']
+#    if PP_grid_org.units=='mbar'
+    PP_grid = PP_grid_org * 1.e3 # mbar => barye (x 1000)
 
     #------------------------------------------------
     # check wavenumber range
@@ -119,7 +117,7 @@ def read_lookuptable(xsfile, wn_limit):
     #### TEST (to be eventually removed)
     id1, id2, id3 = np.where(XS_grid <= 0)
     for i1, i2, i3 in zip(id1, id2, id3) :
-        XS_grid[i1][i2][i3] = 1.e-48
+        XS_grid[i1][i2][i3] = 1.e-36
     #### TEST
 
     return WN_grid, TT_grid, PP_grid, XS_grid

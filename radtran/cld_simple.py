@@ -2,7 +2,7 @@
 # Module
 #=============================================================================
 
-from setting import *
+from setup import *
 import numpy as np
 from scipy import integrate
 from scipy  import constants

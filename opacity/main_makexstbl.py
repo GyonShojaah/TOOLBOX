@@ -16,7 +16,7 @@ from scipy import special
 keywords = ['pressure:', 'temperature:', 'molecule:']
 
 # reference temperature
-TRef, pRef = 296.0, 1013.25
+TRef, pRef = 296.0, 1013.25 # K, mbar
 
 ##############################################################################
 def calc_xs ( molecule, linedata, WN_lattice, T_lattice, P_lattice  ) :

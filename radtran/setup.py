@@ -34,9 +34,9 @@ DELTA       = 1.0
 # CHECK CONVERGENCE BY INCREASING THIS NUMBER !!
 # wavenumber grids
 # (used if USER_WN_ON = True)
-WN_MIN      = 2000
+WN_MIN      = 8000
 WN_MAX      = 10000
-WN_NUM = 10000
+WN_NUM = 20001
 #WN_MIN = 1000
 #WN_MAX = 10000
 #WN_NUM = 9991
@@ -58,9 +58,9 @@ RHOL    = 1.0 # g/cm
 # input/output files
 #------------------------------------------------
 
-FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv_H2O1e-3"
+#FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv_H2O1e-3"
 #FILE_ATM    = "data/atmprof/prof_segura2005_CH4"
-#FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv"
+FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv_H2Oonly"
 #FILE_ATM    = "data/atmprof/prof_Gmin_T400K_H2O_CH4"
 #FILE_ATM    = "data/atmprof/prof_ANN2261-2264aijlE_g10_R10_P10_tl_P4days"
 #FILE_ATM    = "data/atmprof/profile_Neptune_T300K_P100bar"
@@ -74,7 +74,7 @@ FILE_ATM    = "data/atmprof/prof_midlatsummer_ppmv_H2O1e-3"
 #FILE_RFINDX = "data/cld//Warren.yml.txt" # ice water
 
 #XSFILE_TAG  = "../xstbl/xstbl_HITRAN2012_00010-10000_m09991_c25_"
-XSFILE_TAG  = "/Users/yuka/TOOLBOX_20160429/xstbl/xstbl2_HITRAN2012_00010-10000_m09991_"
+XSFILE_TAG  = "/Users/yuka/TOOLBOX/xstbl/xstbl_HITRAN2012_08000-10000_m20001_"
 #XSFILE_TAG  = "lkuptbl/xstbl_HITRAN2012_20000-30000_m10001_c25_"
 #XSFILE_TAG_CNTNM = "../xstbl/xstbl2_cntnm_00010-10000_m09991_"
 XSFILE_TAG_CNTNM = "/Users/yuka/TOOLBOX_20160429/xstbl/xstbl_cntnm_00010-10000_m09991_"
@@ -84,8 +84,8 @@ XSFILE_TAG_CNTNM = "/Users/yuka/TOOLBOX_20160429/xstbl/xstbl_cntnm_00010-10000_m
 #OUTFILE_TAG = "Neptune_T300K_P100bar_00010-10000_m09991_quad-1000_line"
 #OUTFILE_TAG = "prof_ANN1950-1952aijlE_g10_R10_P10_P15days_cld_trapz-1000_line"
 #OUTFILE_TAG = "profile_HATP11b_T500K_00010-10000_m09991_quad-1000_line+cntnm"
-#OUTFILE_TAG = "Earth_midlatsummer"
-OUTFILE_TAG = "midlatsummer_H2O1e-3"
+OUTFILE_TAG = "Earth_midlatsummer_H2Oonly"
+#OUTFILE_TAG = "midlatsummer_H2O1e-3"
 
 #------------------------------------------------
 # planetary parameters (float)

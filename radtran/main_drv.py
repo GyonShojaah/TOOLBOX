@@ -2,14 +2,18 @@
 # Module
 #=============================================================================
 
-from setting import *
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
+
 from copy import deepcopy
 import numpy as np
 import datetime
+import cProfile
+
+from setup import *
 import util_interp
 import errors
 import cgs
-import cProfile
 import gasext
 import cld_simple
 
