@@ -8,14 +8,14 @@ DATAFILE_DIR  = '../data/HITRAN2012/'
 DATAFILE='01_hit12.par'
 
 OUTFILE_DIR = '../xstbl/'
-OUTFILE_TAG  = 'xstbl_HITRAN2012_08000-10000_m20001_H2O'
+OUTFILE_TAG  = 'xstbl_HITRAN2012_02000-04000_m20001_H2O'
 #OUTFILE_TAG  = 'tmp'
 
 #------------------------------------------------
 # wavelength range [cm^-1]
 #------------------------------------------------
-WN_MIN    = 10.0    # cm^-1
-WN_MAX    = 10000.0 # cm^-1
+WN_MIN    = 2000.0    # cm^-1
+WN_MAX    = 4000.0 # cm^-1
 WN_NUM    = 20001
 #WN_CUTOFF = 25.
 
