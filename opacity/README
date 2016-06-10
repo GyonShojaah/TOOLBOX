@@ -22,9 +22,9 @@ The data matrix is saved as a netCDF file.
   with 10000 wavenumber grids as well as 31 grids both for pressure and temperature 
   will take ~2 days. 
 
-- The data type of the cross section is 'float32'. Thus, for example, the size
+- The data type of the cross section is 'float64'. Thus, for example, the size
   of the cross section table with 10000 wavenumber grids as well as 31 grids
-  both for pressure and temperature are ~38 MB. 
+  both for pressure and temperature are ~76 MB. 
 
 
 ------------------------------------------------
@@ -41,12 +41,17 @@ The data matrix is saved as a netCDF file.
     https://www.cfa.harvard.edu/hitran/
 
 
-(3) Modify the parameters in setup_mkxstbl.py
+(3) Create a directory into which you put cross section tables
+    For example:
+    	mkdir ../xstbl
 
 
-(4) Execute!
+(4) Modify the parameters in setup_makexstbl.py
 
-	python main_mkxstbl.py
+
+(5) Execute!
+
+	python main_makexstbl.py
 
 
 
