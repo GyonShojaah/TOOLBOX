@@ -9,22 +9,22 @@ def save_xstbl( outfile, wn_lattice, p_lattice, t_lattice, xs ):
     ncfile_w.createDimension( 'pres',  len(p_lattice)  )
     ncfile_w.createDimension( 'temp',  len(t_lattice)  )
 
-    wn_w   = ncfile_w.createVariable( 'wn', 'float32', ('wn',))
+    wn_w   = ncfile_w.createVariable( 'wn', 'float64', ('wn',))
     wn_w.title = 'Wavenumber'
     wn_w.units = 'cm^-1'
     wn_w[:] = wn_lattice
 
-    pres_w = ncfile_w.createVariable( 'pres', 'float32', ('pres',))
+    pres_w = ncfile_w.createVariable( 'pres', 'float64', ('pres',))
     pres_w.title = 'Pressure'
     pres_w.units = 'mbar'
     pres_w[:] = p_lattice
 
-    temp_w = ncfile_w.createVariable( 'temp', 'float32', ('temp',))
+    temp_w = ncfile_w.createVariable( 'temp', 'float64', ('temp',))
     temp_w.title = 'Temperature'
     temp_w.units = 'K'
     temp_w[:] = t_lattice
 
-    xs_w   = ncfile_w.createVariable( 'xs', 'float32',  ('wn','pres','temp') )
+    xs_w   = ncfile_w.createVariable( 'xs', 'float64',  ('wn','pres','temp') )
     xs_w.title = 'Cross Section'
     xs_w.units = 'cm^2'
     xs_w[:] = xs

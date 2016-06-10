@@ -1,10 +1,6 @@
 #!/usr/bin/env python
-from setup_makexstbl import *
-import io_txt
-import io_nc
-from extract_lines import extract_hitran
-from lineprofile import *
-from molecules import molecules
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
 import numpy as np
 import sys
@@ -13,7 +9,13 @@ import ConfigParser
 from scipy import constants
 from scipy import special
 
-keywords = ['pressure:', 'temperature:', 'molecule:']
+from setup_makexstbl import *
+import io_txt
+import io_nc
+from extract_lines import extract_hitran
+from lineprofile import *
+from molecules import molecules
+
 
 # reference temperature
 TRef, pRef = 296.0, 1013.25 # K, mbar
@@ -85,7 +87,7 @@ if __name__ == "__main__":
     if 'WN_CUTOFF' in globals():
         wn_limit = [ WN_MIN-WN_CUTOFF, WN_MAX+WN_CUTOFF ]
     else:
-        wn_limit = [ WN_MIN , WN_MAX ]
+        wn_limit = [ 0., 10000. ]
     linedata = extract_hitran ( infile, wn_limit, MOLECULE, ISOTOPE )
 
     # filename

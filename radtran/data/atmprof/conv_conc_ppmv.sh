@@ -1,1 +1,0 @@
-awk '{printf("%f\t%f\t%f\t%.4e\t%.4e\t%.4e\n", $1, $2, $3, $6/$4*1e6, $7/$4*1e6, $8/$4*1e6)}' afglms.dat > test
