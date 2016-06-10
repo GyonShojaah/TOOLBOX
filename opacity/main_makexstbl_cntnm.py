@@ -1,21 +1,22 @@
-import MT_CKD
-import util_interp
-import io_txt
-import io_nc
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
-import sys
 import numpy as np
 
 from scipy import constants
 from scipy import special
 
+import MT_CKD
+import util_interp
+import io_txt
+import io_nc
 
-OUTFILE_DIR = 'xstbl/'
-OUTFILE_TAG  = 'xstbl_cntnm_08000-10000_mm200001_H2O'
+OUTFILE_DIR = '../xstbl/'
+OUTFILE_TAG  = 'xstbl_cntnm_04000-06000_mm2001_H2O'
                                                                                                                                
-WN_MIN    = 8000.0    # cm^-1                                                      
-WN_MAX    = 10000.0 # cm^-1
-WN_NUM    = 200001                                                                                                                                                               
+WN_MIN    = 4000.0    # cm^-1                                                      
+WN_MAX    = 6000.0 # cm^-1
+WN_NUM    = 2001
 
 P_MIN     = 1.0e-20 # mbar # might want to go to 1e-6
 P_MAX     = 1.0e+5 # mbar # doesn't need to go above 1e4
