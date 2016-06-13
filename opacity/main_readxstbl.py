@@ -1,14 +1,12 @@
-#=============================================================================
-# Module
-#=============================================================================
+#!/usr/bin/env python
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
-#from setting_readxstbl import *
 import netCDF4
 import numpy as np
 import datetime
+
 import util_interp
-import sys
-#import lowres
 
 #=============================================================================
 # functions
@@ -50,7 +48,7 @@ if __name__ == "__main__":
 
     print '--------------------------------------------------'
 
-    print ' select temperature [mbar] : '
+    print ' select temperature [K] : '
     for ii in xrange( len( T_grid ) ) :
         print '({0:d}) {1:3f}'.format( ii, T_grid[ii] ), 
     print ''
