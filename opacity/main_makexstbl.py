@@ -55,6 +55,7 @@ def calc_xs ( molecule, linedata, WN_lattice, T_lattice, P_lattice  ) :
                     
             strength_array  =  linestrength( molecule, T_lattice[count_T], TRef, linedata['position'], linedata['strength'], linedata['energy'] ) # unit: [cm^-1 / cm^-2]
             voigtfunc_array = voigtfunction( T_lattice[count_T], TRef, P_lattice[count_P], pRef, linedata['position'], linedata['airWidth'], linedata['Tdep'], mass ) # unit: [cm]
+            print "strength_array", strength_array
 
             for count_WN in xrange(WN_NUM) :                
 
@@ -63,6 +64,8 @@ def calc_xs ( molecule, linedata, WN_lattice, T_lattice, P_lattice  ) :
                     wn_ulim = WN_lattice[count_WN] + WN_CUTOFF
                     i_llim  = np.where(  wn_llim < linedata['position'] )[0][0]
                     i_ulim  = np.where(  linedata['position'] < wn_ulim )[0][-1]
+                    print "WN_lattice", WN_lattice[count_WN]
+                    print "i_llim, i_ulim", i_llim, i_ulim
                     if i_ulim == len( linedata['position'] ) - 1 :
                         intensity_array = strength_array[i_llim:]*voigtfunc_array(WN_lattice[count_WN])[i_llim:]
                     else :

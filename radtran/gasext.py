@@ -117,7 +117,7 @@ def read_lookuptable(xsfile, wn_limit):
     #### TEST (to be eventually removed)
     id1, id2, id3 = np.where(XS_grid <= 0)
     for i1, i2, i3 in zip(id1, id2, id3) :
-        XS_grid[i1][i2][i3] = 1.e-36
+        XS_grid[i1][i2][i3] = 1.e-100
     #### TEST
 
     return WN_grid, TT_grid, PP_grid, XS_grid

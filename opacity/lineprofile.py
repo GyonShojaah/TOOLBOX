@@ -1,14 +1,12 @@
-import numpy as np
+import sys, os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
+import numpy as np
 from scipy import constants
 from scipy import special
-from molecules import molecules
 
-CC = constants.c*1e2
-HH = constants.h*1e7
-KK = constants.k*1e7
-GG = constants.g*1e2
-AMU = 1.661e-24
+from molecules import molecules
+from cgs import *
 
 
 def voigtfunction(TT, T_0, PP, P_0, wn, airWidth, Tdep, mass) :
@@ -67,7 +65,7 @@ def voigtfunction(TT, T_0, PP, P_0, wn, airWidth, Tdep, mass) :
 
 
 
-def linestrength(molecule, TT, T_0, wn, energy, strength) :
+def linestrength(molname, TT, T_0, wn, strength, energy) :
     """
     =======================================================================
 
@@ -94,9 +92,9 @@ def linestrength(molecule, TT, T_0, wn, energy, strength) :
     """
 
 
-    beta = molecules[molecule]['TempExpQR']
-    freq = molecules[molecule]['VibFreq']
-    dege = molecules[molecule]['NumDeg']
+    beta = molecules[molname]['TempExpQR']
+    freq = molecules[molname]['VibFreq']
+    dege = molecules[molname]['NumDeg']
 
     fac_exponent  = np.exp(-HH*CC*energy/(KK*TT))/np.exp(-HH*CC*energy/(KK*T_0))
     fac_exponent *= (1 - np.exp(-HH*CC*wn/(KK*TT)))/(1 - np.exp(-HH*CC*wn/(KK*T_0)))
