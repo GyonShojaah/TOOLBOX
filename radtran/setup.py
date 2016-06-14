@@ -2,6 +2,8 @@
 # computation mode
 #------------------------------------------------
 
+# Jade
+
 OBSMODE     = "trans"
 #OBSMODE     = "nadir"
 
