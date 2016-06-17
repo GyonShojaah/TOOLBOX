@@ -60,10 +60,10 @@ RHOL    = 1.0 # g/cm
 
 FILE_ATM    = "../data/atmprof/prof_midlatsummer_ppmv_H2O_CO2"
 
-XSFILE_TAG  = "../xstbl/xstbl_HITRAN2012_08000-10000_m2001_"
-XSFILE_TAG_CNTNM = "../xstbl/xstbl_cntnm_08000-10000_m2001_"
+XSFILE_TAG  = "../xstbl/xstbl_HITRAN2012_08000-10000_m2001_c25_"
+XSFILE_TAG_CNTNM = "../xstbl/xstbl_cntnm_08000-10000_m2001_c25_"
 
-OUTFILE_TAG = "Earth_midlatsummer_H2O_CO2_08000-10000_m2001"
+OUTFILE_TAG = "Earth_midlatsummer_H2O_CO2_08000-10000_m2001_c25"
 
 
 #------------------------------------------------
