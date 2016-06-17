@@ -55,20 +55,21 @@ def calc_xs ( molecule, linedata, WN_lattice, T_lattice, P_lattice  ) :
                     
             strength_array  =  linestrength( molecule, T_lattice[count_T], TRef, linedata['position'], linedata['strength'], linedata['energy'] ) # unit: [cm^-1 / cm^-2]
             voigtfunc_array = voigtfunction( T_lattice[count_T], TRef, P_lattice[count_P], pRef, linedata['position'], linedata['airWidth'], linedata['Tdep'], mass ) # unit: [cm]
-
             for count_WN in xrange(WN_NUM) :                
 
                 if 'WN_CUTOFF' in globals():
                     wn_llim = WN_lattice[count_WN] - WN_CUTOFF
                     wn_ulim = WN_lattice[count_WN] + WN_CUTOFF
-                    i_llim  = np.where(  wn_llim < linedata['position'] )[0][0]
-                    i_ulim  = np.where(  linedata['position'] < wn_ulim )[0][-1]
-                    if i_ulim == len( linedata['position'] ) - 1 :
-                        intensity_array = strength_array[i_llim:]*voigtfunc_array(WN_lattice[count_WN])[i_llim:]
+                    #-------------------------------------
+                    if ( linedata['position'][-1] < wn_llim ):
+                        xs[count_WN][count_T][count_P] = 0.0
+                    #-------------------------------------
                     else :
-                        intensity_array = strength_array[i_llim:i_ulim]*voigtfunc_array(WN_lattice[count_WN])[i_llim:i_ulim]
-                    xs[count_WN][count_T][count_P] = np.sum(intensity_array)
-
+                        i_llim  = np.where(  wn_llim < linedata['position'] )[0][0]
+                        i_ulim  = np.where(  linedata['position'] < wn_ulim )[0][-1]
+                        intensity_array = strength_array[i_llim:i_ulim+1]*voigtfunc_array(WN_lattice[count_WN])[i_llim:i_ulim+1]
+                        xs[count_WN][count_T][count_P] = np.sum(intensity_array)
+                    #-------------------------------------
                 else :
                     intensity_array = strength_array*voigtfunc_array(WN_lattice[count_WN])
                     xs[count_WN][count_T][count_P] = np.sum(intensity_array)

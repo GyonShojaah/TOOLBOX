@@ -33,6 +33,7 @@ def extract_hitran ( dataFile, wn_limit, molecule, isoNr, strMin=0.0 ):
 
     linedata = core_parameters ( lines, dataFile )
 
+#    print "linedata", linedata
     return linedata
             #return molecules, isotopes, positions, strengths, energies, airWidths, selfWidths, tempExps
 

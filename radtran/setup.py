@@ -2,6 +2,8 @@
 # computation mode
 #------------------------------------------------
 
+# Jade
+
 OBSMODE     = "trans"
 #OBSMODE     = "nadir"
 
@@ -64,7 +66,6 @@ XSFILE_TAG  = "../xstbl/xstbl_HITRAN2012_08000-10000_m2001_c25_"
 XSFILE_TAG_CNTNM = "../xstbl/xstbl_cntnm_08000-10000_m2001_c25_"
 
 OUTFILE_TAG = "Earth_midlatsummer_H2O_CO2_08000-10000_m2001_c25"
-
 
 #------------------------------------------------
 # planetary parameters (float)
