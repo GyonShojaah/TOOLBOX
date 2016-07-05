@@ -11,6 +11,7 @@ DATAFILE='02_hit12.par'
 OUTFILE_DIR = '../xstbl/'
 #OUTFILE_TAG  = 'xstbl_HITRAN2012_02000-04000_m2001_c25_H2O'
 OUTFILE_TAG  = 'xstbl_HITRAN2012_08000-10000_m2001_c25_CO2'
+OUTFILE_FORMAT = 'netCDF'
 
 #------------------------------------------------
 # wavelength range [cm^-1]

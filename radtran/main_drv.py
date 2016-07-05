@@ -190,7 +190,7 @@ def main():
     if (MOLABS_ON):
         for molname in list_mol:
             print "adding extinction by ", molname, "..."
-            mesh_nXS = mesh_nXS + gasext.calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, XSFILE_TAG, cntnm_on=CNTNM_ON, xsfile_tag_cntnm=XSFILE_TAG_CNTNM)
+            mesh_nXS = mesh_nXS + gasext.calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, XSFILE_TAG, XSFILE_SUFFIX, cntnm_on=CNTNM_ON, xsfile_tag_cntnm=XSFILE_TAG_CNTNM)
     if (RAYLEIGH_ON):
         print "adding extinction by Rayleigh scattering..."
         mesh_nXS     = mesh_nXS + gasext.calc_nXSofZ_Rayleigh(layer_z, grid_wn, tuple_func_atmprof, POLARIZATION)

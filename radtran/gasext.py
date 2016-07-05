@@ -15,7 +15,7 @@ import errors
 import cgs
 
 #=============================================================================
-def calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, xsfile_tag, cntnm_on=True, xsfile_tag_cntnm=None):
+def calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, xsfile_tag, xsfile_suffix, cntnm_on=True, xsfile_tag_cntnm=None):
 
     func_TofZ, func_PofZ, func_MUofZ, dict_func_NofZ = tuple_func_atmprof
     layer_P  = func_PofZ(layer_z)
@@ -26,7 +26,7 @@ def calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, xsfile_tag
     #------------------------------------------------
     # set up lookup tables
     #------------------------------------------------
-    xsfile = xsfile_tag + molname + ".nc"
+    xsfile = xsfile_tag + molname + xsfile_suffix
     WN_lookuptable, TT_lookuptable, PP_lookuptable, XS_lookuptable = read_lookuptable(xsfile, (grid_wn[0], grid_wn[-1]))
 
     #------------------------------------------------
@@ -42,7 +42,7 @@ def calc_nXSofZ_molabs(layer_z, grid_wn, tuple_func_atmprof, molname, xsfile_tag
     #------------------------------------------------
     if (cntnm_on and (molname=="H2O")): 
         print "     including continuum"
-        xsfile = xsfile_tag_cntnm + molname + ".npz"
+        xsfile = xsfile_tag_cntnm + molname + xsfile_suffix
         WN_lookuptable, TT_lookuptable, PP_lookuptable, XS_cntnm = read_lookuptable(xsfile, (grid_wn[0], grid_wn[-1]))
         XS_lookuptable = XS_lookuptable + XS_cntnm
 
@@ -94,7 +94,17 @@ def read_lookuptable(xsfile, wn_limit):
     """
     Extract Look-up Table
     """
-    WN_grid_org, PP_grid_org, TT_grid, XS_grid_org = io_nc.read_xstbl( xsfile )
+    if '.nc' in xsfile: 
+        WN_grid_org, PP_grid_org, TT_grid, XS_grid_org = io_nc.read_xstbl( xsfile )
+    elif '.npz' in xsfile :
+        data = np.load( xsfile )
+        WN_grid_org = data['WN']
+        PP_grid_org = data['P']
+        TT_grid     = data['T']
+        XS_grid_org = data['XS']
+    else :
+        # error! 
+        errors.exit_msg("Unknown file type of cross section tables.")
 
 #    if PP_grid_org.units=='mbar'
     PP_grid = PP_grid_org * 1.e3 # mbar => barye (x 1000)

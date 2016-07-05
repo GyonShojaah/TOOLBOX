@@ -113,7 +113,10 @@ if __name__ == "__main__":
     xs = calc_xs ( MOLECULE, linedata, WN_lattice, T_lattice, P_lattice  )
 
     # save output
-    io_nc.save_xstbl( outfile, WN_lattice, P_lattice, T_lattice, xs )
+    if OUTFILE_FORMAT == 'netCDF' :
+        io_nc.save_xstbl( outfile, WN_lattice, P_lattice, T_lattice, xs )
+    if OUTFILE_FORMAT == 'npz' :
+        np.savez( outfile, wn=WN_lattice, pres=P_lattice, temp=T_lattice, xs=xs )
     #np.savez(outfile, WN=WN_lattice, P=P_lattice, T=T_lattice, XS=xs)
 
     # save information in log file
