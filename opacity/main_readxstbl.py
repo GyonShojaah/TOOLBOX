@@ -2,7 +2,7 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
-import netCDF4
+import errors
 import numpy as np
 import datetime
 
@@ -34,8 +34,21 @@ def read_lookuptable ( infile ):
 
 if __name__ == "__main__":
 
+
     filename = sys.argv[1]
-    WN_grid, P_grid, T_grid, XS_grid = read_lookuptable ( filename )
+    if '.nc' in filename :
+        import io_nc
+        WN_grid, P_grid, T_grid, XS_grid = io_nc.read_xstbl( filename )
+    elif '.npz' in filename :
+        data = np.load( filename )
+        WN_grid = data['WN']
+        P_grid = data['P']
+        T_grid = data['T']
+        XS_grid = data['XS']
+    else :
+        # error! 
+        errors.exit_msg("Unknown file type of cross section tables.")
+
 
     print '--------------------------------------------------'
 
@@ -57,10 +70,13 @@ if __name__ == "__main__":
 
     print '--------------------------------------------------'
 
-    with open( filename+'.tmp' , 'w') as f:
+    print ' type ouput file name'
+    s_temp = raw_input()
+
+    with open( s_temp , 'w') as f:
 
         for i_wn in xrange( len( WN_grid ) ):
-            f.write( str(WN_grid[ i_wn ])+'\t'+str(XS_grid[ i_wn, i_pres, i_temp ])+'\n' )
+            f.write( str(WN_grid[ i_wn ])+'\t'+str(XS_grid[ i_wn, i_temp, i_pres ])+'\n' )
 
 
 
