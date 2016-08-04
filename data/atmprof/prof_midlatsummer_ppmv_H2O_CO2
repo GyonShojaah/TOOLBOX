@@ -1,5 +1,5 @@
 # AFGL atmospheric constituent profile. midlatitude summer. ( AFGL-TR-86-0110)
-# molecules: H2O CO2
+# molecules: H2O CO2 
 # z [km]	 P [mbar]	T [K]	molcular weight	H2O [ppm]	CO2 [ppm]
 120.000000	0.000020	380.000000	28.8	2.0015e-01	3.5027e+01
 115.000000	0.000040	316.800000	28.8	2.4017e-01	4.0029e+01
