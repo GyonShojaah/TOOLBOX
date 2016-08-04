@@ -4,13 +4,13 @@
 import sys, os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../common')
 
-import netCDF4
+#import netCDF4
 import numpy  as np
 from   scipy  import interpolate
 
 
 
-import io_nc 
+#import io_nc 
 import errors
 import cgs
 
