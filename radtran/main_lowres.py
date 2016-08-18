@@ -1,8 +1,8 @@
 #INFILE_TAG = "out/transmission/prof_ANN1962-1965aijlE_g10_R10_P10_tl_P100days_cld_trapz-1000_line"
 #INFILE_TAG = "out/transmission/profile_USstandard_CH4_N2O_00010-10000_m10001_quad-2000_line"
 #INFILE_TAG = "out/transmission/segura2005_Temp_H2O_CH4"
-UNIT   = "wl"
-#UNIT  = "wn"
+#UNIT   = "wl"
+UNIT  = "wn"
 
 #from setting import *
 import sys
@@ -10,7 +10,7 @@ from copy import deepcopy
 import numpy as np
 
 INFILE_TAG = sys.argv[1]
-RESOL  = sys.argv[2]
+RESOL  = int(sys.argv[2])
 
 
 #=============================================================================
@@ -28,7 +28,7 @@ def lower_resolution(wn_array, sp_array, resolution):
     jj = 0
     for ii in range(len(wn_array)):
 
-        if wn_array[ii] > wn_tmp+wn_tmp/resolution :
+        if wn_array[ii] > wn_tmp + wn_tmp/resolution :
             wn_new_array[jj] = wn_new_array[jj]/(count*1.0)
             sp_new_array[jj] = sp_new_array[jj]/(count*1.0)
             wn_new_array = np.r_[wn_new_array, np.zeros(1)]
