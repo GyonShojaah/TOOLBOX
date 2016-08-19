@@ -1,0 +1,8 @@
+FILE: xstbl_HITRAN2012_06000-08000_m20001_CO2.nc
+
+wavenumber [cm^-1] : 6000.0-8000.0, 20001 grid points
+pressure [mbar]    : 1e-20-100000.0, 26 grid points
+temperature [K]    : 150-500, 8 grid points
+
+start : 2016-06-13 12:46:46
+end   : 2016-06-14 07:39:54
